@@ -1,0 +1,23 @@
+// Переменные
+$primary-color: #3182ce;
+$primary-hover: #2c5282;
+$bg-color: #fafafa;
+$text-color: #0a0a0a;
+$text-muted: #666;
+$border-color: #e5e5e5;
+$radius: 12px;
+$radius-sm: 8px;
+$shadow: 0 1px 3px rgba(0,0,0,0.05);
+
+// Миксины для адаптивности
+@mixin respond($breakpoint) {
+  @if $breakpoint == sm {
+    @media (max-width: 639px) { @content; }
+  }
+  @if $breakpoint == md {
+    @media (max-width: 1023px) { @content; }
+  }
+  @if $breakpoint == lg {
+    @media (max-width: 1279px) { @content; }
+  }
+}

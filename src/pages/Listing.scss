@@ -1,0 +1,87 @@
+@import '../styles/_variables.scss';
+
+.listing {
+  flex: 1;
+  background: $bg-color;
+}
+
+.listing__content {
+  display: flex;
+  gap: 32px;
+  padding: 32px 40px;
+  max-width: 1440px;
+  margin: 0 auto;
+  width: 100%;
+  
+  @include respond(lg) {
+    flex-direction: column;
+    padding: 24px;
+  }
+  
+  @include respond(md) {
+    padding: 20px;
+  }
+  
+  @include respond(sm) {
+    padding: 16px;
+    gap: 20px;
+  }
+}
+
+.sidebar-wrapper {
+  width: 280px;
+  flex-shrink: 0;
+  
+  @include respond(lg) {
+    width: 100%;
+  }
+}
+
+.listing__main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  
+  @include respond(sm) {
+    gap: 20px;
+  }
+}
+
+.products-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+  @include respond(sm) {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+}
+
+.products-count {
+  color: $text-muted;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+  
+  @include respond(lg) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  @include respond(md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+  }
+  
+  @include respond(sm) {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+}

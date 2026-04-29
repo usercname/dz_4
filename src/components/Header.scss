@@ -1,0 +1,108 @@
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 40px;
+  background: white;
+  border-bottom: 1px solid $border-color;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: $text-color;
+  
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.nav-categories {
+  display: flex;
+  gap: 24px;
+}
+
+.nav-tab {
+  padding: 8px 0;
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-muted;
+  position: relative;
+  transition: color 0.2s;
+  
+  &:hover {
+    color: $text-color;
+  }
+  
+  &.active {
+    color: $text-color;
+    
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: -17px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: $text-color;
+    }
+  }
+}
+
+.header__actions {
+  display: flex;
+  gap: 16px;
+}
+
+.icon-btn {
+  color: $text-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+// ... существующие стили ...
+
+.icon-btn {
+  position: relative; // Важно для позиционирования бейджа
+  color: $text-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  
+  &:hover {
+    opacity: 0.6;
+  }
+}
+
+.cart-badge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: #e11d48;
+  color: white;
+  font-size: 10px;
+  font-weight: 700;
+  min-width: 18px;
+  height: 18px;
+  border-radius: 9px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 4px;
+  transform: translate(25%, -25%);
+}
