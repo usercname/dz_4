@@ -1,23 +1,32 @@
-import { products } from '../data/products';
+import { getProductById } from '../data/productMap';
 import './Cart.scss';
 
 function Cart({ cart, updateCartQuantity, removeFromCart, setPageType }) {
-  const cartItems = Object.entries(cart).map(([id, quantity]) => {
-    const product = products.find(p => p.id === Number(id));
-    return product ? { ...product, quantity } : null;
-  }).filter(Boolean);
+  const cartItems = Object.entries(cart || {})
+    .map(([id, quantity]) => {
+      const product = getProductById(Number(id));
+      return product ? { ...product, quantity: Number(quantity) } : null;
+    })
+    .filter(Boolean);
 
-  const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const tax = subtotal * 0.08;
-  const total = subtotal + tax;
+  // Безопасные расчёты
+  const subtotal = cartItems.reduce((sum, item) => {
+    const price = Number(item?.price) || 0;
+    const qty = Number(item?.quantity) || 0;
+    return sum + price * qty;
+  }, 0);
+
+  const tax = +(subtotal * 0.08).toFixed(2);
+  const total = +(subtotal + tax).toFixed(2);
 
   const formatPrice = (price, decimals = 2) => {
+    const num = Number(price) || 0;
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
       currency: 'USD',
       minimumFractionDigits: decimals,
       maximumFractionDigits: decimals
-    }).format(price);
+    }).format(num);
   };
 
   if (cartItems.length === 0) {
@@ -43,7 +52,7 @@ function Cart({ cart, updateCartQuantity, removeFromCart, setPageType }) {
           <div className="cart__items">
             {cartItems.map(item => (
               <div key={item.id} className="cart-item">
-                <img src={item.images[0]} alt={item.model} className="cart-item__image" />
+                <img src={item.images?.[0]} alt={item.model} className="cart-item__image" />
                 
                 <div className="cart-item__body">
                   <div className="cart-item__header">
@@ -67,21 +76,21 @@ function Cart({ cart, updateCartQuantity, removeFromCart, setPageType }) {
                     <div className="cart-item__qty">
                       <button 
                         className="qty-btn qty-btn--minus"
-                        onClick={() => updateCartQuantity(item.id, item.quantity - 1)}
+                        onClick={() => updateCartQuantity(item.id, (item.quantity || 0) - 1)}
                       >
                         −
                       </button>
-                      <span className="qty-value">{item.quantity}</span>
+                      <span className="qty-value">{item.quantity || 0}</span>
                       <button 
                         className="qty-btn qty-btn--plus"
-                        onClick={() => updateCartQuantity(item.id, item.quantity + 1)}
+                        onClick={() => updateCartQuantity(item.id, (item.quantity || 0) + 1)}
                       >
                         +
                       </button>
                     </div>
                     
                     <div className="cart-item__total">
-                      {formatPrice(item.price * item.quantity, 0)}
+                      {formatPrice((item.price || 0) * (item.quantity || 0), 0)}
                     </div>
                   </div>
                 </div>

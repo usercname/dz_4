@@ -7,8 +7,7 @@ function ProductSort({ sortBy, onSortChange }) {
       <select 
         className="sort-select"
         value={sortBy}
-        onChange={(e) => onSortChange(e.target.value)}
-      >
+        onChange={(e) => onSortChange(e.target.value)}>
         <option value="low">Price: Low to High</option>
         <option value="high">Price: High to Low</option>
       </select>

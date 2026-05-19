@@ -1,15 +1,16 @@
-// Переменные
-$primary-color: #3182ce;
-$primary-hover: #2c5282;
-$bg-color: #fafafa;
+// Colors
+$primary-color: #0a0a0a;
 $text-color: #0a0a0a;
 $text-muted: #666;
+$bg-color: #fafafa;
 $border-color: #e5e5e5;
+
+// Spacing & Layout
 $radius: 12px;
 $radius-sm: 8px;
-$shadow: 0 1px 3px rgba(0,0,0,0.05);
+$shadow: 0 2px 8px rgba(0,0,0,0.08);
 
-// Миксины для адаптивности
+// Breakpoints
 @mixin respond($breakpoint) {
   @if $breakpoint == sm {
     @media (max-width: 639px) { @content; }

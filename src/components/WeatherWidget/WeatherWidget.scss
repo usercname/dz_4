@@ -1,0 +1,263 @@
+@import '../../styles/_variables.scss';
+
+/* 🌍 Контейнер виджета */
+.weather-widget {
+  position: relative;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: $radius-sm;
+  padding: 20px;
+  color: white;
+  margin-bottom: 20px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* ❌ Крестик (как в Special Deal) */
+.weather-widget__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(255, 255, 255, 0.2);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: none;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* 📊 Данные о погоде */
+.weather-widget__data {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.weather-widget__icon {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+}
+
+.weather-widget__temp {
+  font-size: 32px;
+  font-weight: 800;
+  margin: 8px 0;
+}
+
+.weather-widget__desc {
+  font-size: 14px;
+  opacity: 0.95;
+  margin-bottom: 4px;
+  text-transform: capitalize;
+}
+
+.weather-widget__city {
+  font-size: 13px;
+  opacity: 0.85;
+}
+
+/* 🔘 Инпут + кнопка */
+.weather-widget__input-group {
+  display: flex;
+  flex-direction: column; /* 🔑 Вертикальное расположение */
+  gap: 8px;
+  margin-top: 16px;
+  width: 100%;
+}
+
+.weather-widget__input {
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #111;
+  box-sizing: border-box; /* 🔑 Чтобы padding не вылезал */
+  
+  &::placeholder {
+    color: #888;
+  }
+  
+  &:focus {
+    outline: none;
+    background: white;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+  }
+  
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+/* 🔑 КНОПКА "получить погоду" */
+.weather-widget__btn {
+  width: 100%; /* 🔑 Растягиваем на всю ширину */
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+  background: rgba(255, 255, 255, 0.25);
+  color: white;
+  white-space: nowrap;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  
+  &:hover:not(:disabled) {
+    background: rgba(255, 255, 255, 0.35);
+    transform: translateY(-1px);
+  }
+  
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+}
+
+/* ⚠️ Ошибка */
+.weather-widget__error {
+  font-size: 11px;
+  margin-top: 10px;
+  opacity: 0.9;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 6px;
+  border-radius: 4px;
+}
+
+/* 💀 Скелетон загрузки */
+.weather-widget__skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  
+  .skeleton-line {
+    height: 14px;
+    background: rgba(255, 255, 255, 0.25);
+    border-radius: 4px;
+    
+    &--wide { width: 100%; }
+    &--medium { width: 70%; }
+    &--narrow { width: 40%; }
+  }
+}
+
+/* 🪟 Модалка выбора города (через Portal) */
+.city-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1001;
+  animation: fadeIn 0.2s ease;
+}
+
+.city-modal {
+  background: white;
+  border-radius: $radius;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  position: relative;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideIn 0.3s ease;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.city-modal__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: rgba(0, 0, 0, 0.05);
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: none;
+  font-size: 18px;
+  color: #666;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  &:hover {
+    background: rgba(0, 0, 0, 0.1);
+    color: #000;
+  }
+}
+
+.city-modal h3 {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 16px;
+  color: #222;
+  padding-right: 32px;
+}
+
+.city-modal__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.city-modal__item {
+  padding: 12px;
+  border-radius: $radius-sm;
+  cursor: pointer;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.2s;
+  
+  &:hover {
+    background: #f8f9fa;
+  }
+  
+  &:last-child {
+    border-bottom: none;
+  }
+}
+
+.city-modal__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+  display: block;
+}
+
+.city-modal__region {
+  font-size: 13px;
+  color: #777;
+  display: block;
+  margin-top: 2px;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideIn {
+  from { 
+    transform: translateY(-20px); 
+    opacity: 0; 
+  }
+  to { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+}

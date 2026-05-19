@@ -1,22 +1,13 @@
-@import '../styles/_variables.scss';
-
 .sidebar {
   background: white;
   border-radius: $radius;
   padding: 24px;
   box-shadow: $shadow;
-  
-  @include respond(lg) {
-    padding: 16px;
-  }
 }
 
 .filter-section {
   margin-bottom: 28px;
-  
-  &:last-of-type {
-    margin-bottom: 20px;
-  }
+  &:last-of-type { margin-bottom: 20px; }
 }
 
 .filter-label {
@@ -42,22 +33,8 @@
   background-position: right 12px center;
   padding-right: 40px;
   
-  &:hover:not(:disabled) {
-    border-color: $text-color;
-    background-color: white;
-  }
-  
-  &:focus:not(:disabled) {
-    outline: none;
-    border-color: $text-color;
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
-  }
-  
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+  &:hover:not(:disabled) { border-color: $text-color; background-color: white; }
+  &:focus:not(:disabled) { outline: none; border-color: $text-color; background-color: white; box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1); }
 }
 
 .price-range {
@@ -89,22 +66,8 @@
   transition: all 0.2s;
   box-sizing: border-box;
   
-  &:hover:not(:disabled) {
-    border-color: $text-color;
-    background-color: white;
-  }
-  
-  &:focus:not(:disabled) {
-    outline: none;
-    border-color: $text-color;
-    background-color: white;
-    box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1);
-  }
-  
-  &:disabled {
-    cursor: not-allowed;
-    opacity: 0.6;
-  }
+  &:hover:not(:disabled) { border-color: $text-color; background-color: white; }
+  &:focus:not(:disabled) { outline: none; border-color: $text-color; background-color: white; box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.1); }
   
   &:-webkit-autofill,
   &:-webkit-autofill:hover,
@@ -128,21 +91,8 @@
   transition: all 0.2s;
   margin-bottom: 24px;
   
-  &:hover:not(:disabled) {
-    opacity: 0.9;
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(10, 10, 10, 0.15);
-  }
-  
-  &:active:not(:disabled) {
-    transform: translateY(0);
-  }
-  
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-    transform: none;
-  }
+  &:hover:not(:disabled) { opacity: 0.9; transform: translateY(-1px); box-shadow: 0 4px 12px rgba(10, 10, 10, 0.15); }
+  &:disabled { opacity: 0.5; cursor: not-allowed; }
 }
 
 .special-deal {
@@ -153,34 +103,46 @@
   position: relative;
   overflow: hidden;
   
-  &__header {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    margin-bottom: 8px;
-  }
-  
-  &__icon {
-    font-size: 16px;
-  }
-  
-  &__title {
-    font-size: 16px;
-    font-weight: 700;
-  }
-  
-  &__text {
-    font-size: 13px;
-    line-height: 1.5;
-    margin-bottom: 12px;
-    opacity: 0.95;
-  }
+  &__header { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+  &__icon { font-size: 16px; }
+  &__title { font-size: 16px; font-weight: 700; }
+  &__text { font-size: 13px; line-height: 1.5; margin-bottom: 12px; opacity: 0.95; }
   
   &__timer {
-    font-size: 20px;
+    font-size: 24px;
     font-weight: 700;
     font-family: 'Courier New', monospace;
     letter-spacing: 1px;
+    margin-bottom: 12px;
+    text-align: center;
+    min-height: 32px;
+  }
+  
+  &__controls {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+  
+  .deal-btn {
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    
+    &:hover:not(:disabled) { background: rgba(255, 255, 255, 0.3); }
+    &:disabled { opacity: 0.5; cursor: not-allowed; }
+    
+    &--restart--active {
+      background: white;
+      color: #e11d48;
+      font-weight: 700;
+    }
   }
   
   &__close {
@@ -199,10 +161,7 @@
     justify-content: center;
     font-size: 16px;
     line-height: 1;
-    transition: background 0.2s;
     
-    &:hover {
-      background: rgba(255,255,255,0.3);
-    }
+    &:hover { background: rgba(255,255,255,0.3); }
   }
 }

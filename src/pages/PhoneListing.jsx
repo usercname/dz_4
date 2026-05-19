@@ -1,45 +1,40 @@
 import { useState, useEffect } from 'react';
-import { products } from '../data/products';
+import { getProductsByCategory } from '../data/productMap';
 import Sidebar from '../components/Sidebar';
 import ProductCard from '../components/ProductCard';
 import ProductSort from '../components/ProductSort';
 import './Listing.scss';
 
-function TvListing({ cart, addToCart, updateCartQuantity, removeFromCart, onPageChange }) {
+function PhoneListing({ cart, addToCart, updateCartQuantity, removeFromCart, onPageChange }) {
   const category = 'phone';
   
-  // Фильтруем товары по категории
-  const categoryProducts = products.filter(p => p.category === category);
+  const categoryProducts = getProductsByCategory(category);
   
-  // Состояние фильтров
   const [filters, setFilters] = useState({
     brand: '',
     minPrice: '',
-    maxPrice: 5000
+    maxPrice: '5000'
   });
   
-  // Состояние применённых фильтров (для кнопки Apply)
   const [appliedFilters, setAppliedFilters] = useState({ ...filters });
-  
-  // Состояние сортировки
   const [sortBy, setSortBy] = useState('low');
 
-  // Сброс фильтров при смене категории (через ключ)
   useEffect(() => {
-    setFilters({ brand: '', minPrice: '', maxPrice: 5000 });
-    setAppliedFilters({ brand: '', minPrice: '', maxPrice: 5000 });
+    setFilters({ brand: '', minPrice: '', maxPrice: '5000' });
+    setAppliedFilters({ brand: '', minPrice: '', maxPrice: '5000' });
     setSortBy('low');
   }, [category]);
 
-  // Получаем уникальные бренды для текущей категории
-  const brands = [...new Set(categoryProducts.map(p => p.brand))].sort();
-
-  // Применяем фильтры и сортировку
   const filteredAndSorted = categoryProducts
     .filter(p => {
       if (appliedFilters.brand && p.brand !== appliedFilters.brand) return false;
-      if (appliedFilters.minPrice && p.price < Number(appliedFilters.minPrice)) return false;
-      if (appliedFilters.maxPrice && p.price > Number(appliedFilters.maxPrice)) return false;
+      
+      const min = Number(appliedFilters.minPrice);
+      const max = Number(appliedFilters.maxPrice);
+      
+      if (appliedFilters.minPrice !== '' && p.price < min) return false;
+      if (appliedFilters.maxPrice !== '' && p.price > max) return false;
+      
       return true;
     })
     .sort((a, b) => {
@@ -47,24 +42,16 @@ function TvListing({ cart, addToCart, updateCartQuantity, removeFromCart, onPage
       return a.price - b.price;
     });
 
-  const handleApplyFilters = () => {
-    setAppliedFilters({ ...filters });
-  };
-
-  const handleFilterChange = (key, value) => {
-    setFilters(prev => ({ ...prev, [key]: value }));
-  };
-
-  const handleSortChange = (value) => {
-    setSortBy(value);
-  };
+  const handleApplyFilters = () => setAppliedFilters({ ...filters });
+  const handleFilterChange = (key, value) => setFilters(prev => ({ ...prev, [key]: value }));
+  const handleSortChange = (value) => setSortBy(value);
 
   return (
     <main className="listing">
       <div className="listing__content">
         <aside className="sidebar-wrapper">
           <Sidebar 
-            brands={brands}
+            category={category}
             filters={filters}
             onFilterChange={handleFilterChange}
             onApply={handleApplyFilters}
@@ -95,4 +82,4 @@ function TvListing({ cart, addToCart, updateCartQuantity, removeFromCart, onPage
   );
 }
 
-export default TvListing;
+export default PhoneListing;
